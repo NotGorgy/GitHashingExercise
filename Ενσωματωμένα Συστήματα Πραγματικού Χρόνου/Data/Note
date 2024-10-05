@@ -1,2 +1,2 @@
 The size of the data files was too big, so they were separated in three different .7z files
-Also make sure if you want to read the .txt files the encoding is UTF-8
+Also make sure if you want to read the .txt files make sure the encoding is UTF-8
