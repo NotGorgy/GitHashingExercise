@@ -1,8 +1,8 @@
 /*
 >To stop the programme use Cntrl-C
 >To modify the stocks you want to gather data from, edit the:
-  i) line 20 "NUMBER_OF_SYMBOLS", depending on how many stocks you want to select
-  ii) lines 60 and 62, modify the names of symbols 
+  i) line 19 "NUMBER_OF_SYMBOLS", depending on how many stocks you want to select
+  ii) lines 58 "sympol_message[]" and 60 "stock_symbols[]", modify the names of symbols 
 */
 #include <pthread.h>
 #include <stdio.h>
