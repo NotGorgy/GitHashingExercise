@@ -25,6 +25,7 @@ for file_path in file_paths:
     # Convert data to numeric (NaNs will be preserved for missing data)
     df = df.apply(pd.to_numeric, errors='coerce')
 
+    # The first 15 values are very inaccurate since the program has not yet run for enough time to collect samples for 15-min
     # Drop the first 15 non-null values (i.e., valid data) in both 'SMA' and 'Volume'
     valid_sma_indices = df['SMA'].dropna().index[:15]
     valid_volume_indices = df['Volume'].dropna().index[:15]
