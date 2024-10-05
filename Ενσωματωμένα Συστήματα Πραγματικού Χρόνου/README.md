@@ -1,2 +1,2 @@
-# 🔗 RTES-2024
-_Final Project for the lesson of Real Time Embedded Systems for 2024_
+# 🔗 ΕΣΠΧ
+ Τελική εργασία μαθημάτος 'Ενσωματωμένα Συστήματα Πραγματικού Χρόνου' 2024
