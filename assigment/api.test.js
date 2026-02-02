@@ -65,30 +65,67 @@ test.serial('Books: POST -> GET -> PUT -> DELETE', async (t) => {
     .expect(204);
 });
 
-test.serial('Authors: POST then GET list', async (t) => {
+test.serial('GET /authors returns array', async (t) => {
+  const res = await t.context.client
+    .get('/authors')
+    .set('Accept', 'application/json')
+    .expect(200);
+
+  t.true(Array.isArray(res.body));
+});
+
+test.serial('Authors: POST -> GET -> PUT -> DELETE', async (t) => {
+  // POST
   const created = await t.context.client
     .post('/authors')
     .set('Content-Type', 'application/json')
-    .send({ name: 'Frank Herbert' })
+    .send({ name: 'JoeMama' })
     .expect(201);
 
   t.truthy(created.body);
   t.truthy(created.body.id);
 
-  const list = await t.context.client
-    .get('/authors')
+  const authorId = created.body.id;
+
+  // GET by id
+  const got = await t.context.client
+    .get(`/authors/${authorId}`)
     .set('Accept', 'application/json')
     .expect(200);
 
-  t.true(Array.isArray(list.body));
-  t.true(list.body.length >= 1);
+  t.is(got.body.id, authorId);
+  t.is(got.body.name, 'JoeMama');
+
+  // PUT
+  const updated = await t.context.client
+    .put(`/authors/${authorId}`)
+    .set('Content-Type', 'application/json')
+    .send({ name: 'JoePapa' })
+    .expect(200);
+
+  t.is(updated.body.name, 'JoePapa');
+
+  // DELETE
+  await t.context.client
+    .delete(`/authors/${authorId}`)
+    .expect(204);
 });
 
-test.serial('Categories: POST then GET by id', async (t) => {
+test.serial('GET /categories returns array', async (t) => {
+  const res = await t.context.client
+    .get('/categories')
+    .set('Accept', 'application/json')
+    .expect(200);
+
+  t.true(Array.isArray(res.body));
+});
+
+test.serial('Categories: POST -> GET -> PUT -> DELETE', async (t) => {
+  // POST
   const created = await t.context.client
     .post('/categories')
     .set('Content-Type', 'application/json')
-    .send({ name: 'Sci-Fi' })
+    .send({ name: 'Fantasy' })
     .expect(201);
 
   t.truthy(created.body);
@@ -96,42 +133,28 @@ test.serial('Categories: POST then GET by id', async (t) => {
 
   const categoryId = created.body.id;
 
+  // GET by id
   const got = await t.context.client
     .get(`/categories/${categoryId}`)
     .set('Accept', 'application/json')
     .expect(200);
 
-  t.is(got.body.name, 'Sci-Fi');
-});
+  t.is(got.body.id, categoryId);
+  t.is(got.body.name, 'Fantasy');
 
-test.serial('GET /authors/:id and GET /categories/:id (smoke)', async (t) => {
-  // create author
-  const a = await t.context.client
-    .post('/authors')
-    .send({ name: 'Test Author' })
-    .expect(201);
-
-  const authorId = a.body.id;
-
-  // create category
-  const c = await t.context.client
-    .post('/categories')
-    .send({ name: 'Test Category' })
-    .expect(201);
-
-  const categoryId = c.body.id;
-
-  // GET author by id
-  const gotAuthor = await t.context.client
-    .get(`/authors/${authorId}`)
+  // PUT
+  const updated = await t.context.client
+    .put(`/categories/${categoryId}`)
+    .set('Content-Type', 'application/json')
+    .send({ name: 'HELP' })
     .expect(200);
 
-  t.is(gotAuthor.body.id, authorId);
+  t.is(updated.body.name, 'HELP');
 
-  // GET category by id
-  const gotCategory = await t.context.client
-    .get(`/categories/${categoryId}`)
-    .expect(200);
-
-  t.is(gotCategory.body.id, categoryId);
+  // DELETE
+  await t.context.client
+    .delete(`/categories/${categoryId}`)
+    .expect(204);
 });
+
+
