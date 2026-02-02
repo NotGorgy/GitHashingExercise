@@ -6,7 +6,7 @@ var Default = require('../service/DefaultService');
 module.exports.authorsAuthorIdDELETE = function authorsAuthorIdDELETE (req, res, next, authorId) {
   Default.authorsAuthorIdDELETE(authorId)
     .then(function (response) {
-      utils.writeJson(res, response);
+      utils.writeJson(res, response, 204);
     })
     .catch(function (response) {
       utils.writeJson(res, response);
@@ -106,7 +106,7 @@ module.exports.booksPOST = function booksPOST (req, res, next, body) {
 module.exports.categoriesCategoryIdDELETE = function categoriesCategoryIdDELETE (req, res, next, categoryId) {
   Default.categoriesCategoryIdDELETE(categoryId)
     .then(function (response) {
-      utils.writeJson(res, response);
+      utils.writeJson(res, response, 204);
     })
     .catch(function (response) {
       utils.writeJson(res, response);
