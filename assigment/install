@@ -1,0 +1,3 @@
+npm install --save-dev nyc
+npm install --save-dev ava
+npm install --save-dev supertest
